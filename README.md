@@ -11,7 +11,11 @@ For the case of nerdle, things are a little trickier. I was unable to extract th
 ## Usage
 Using the `Solve` functions allows the user to pass in a specific answer and see what guesses the selected algorithm would choose in solving it. To solve an unseen example requires more work, and requires directly interfacing with the `table` function. Without any arguments, this function searches all possible guesses for the best opening. 
 
-Suppose that you've tried the words `hello` and `crane`, and now have two results to feed in. First, the results are converted to an array, where green is 2, orange is 1, and grey is 0. This gives something like `rel = [2,1,2,0,0, 1,2,0,0,0]`, where the first 5 are the output from `hello` and the second 5 are from `crane` This is done by calling `table( fw = ['hello','crane'], fwr = convert(rel))`, where `convert` turns the array into an integer representation. This then returns two suggestions for the next word to guess according to the two different algorithms, along with some statistics and a copy of all the remaining possible words. It is possible to pass this list of remaiining words in the `answers` argument to save on computation.
+Suppose that you've tried the words `hello` and `crane`, and now have two results to feed in. First, the results are converted to an array, where green is 2, orange is 1, and grey is 0. This gives something like `rel = [1,2,0,0,0 ,0,0,0,0,1]`, where the first 5 are the output from `hello` and the second 5 are from `crane` This is done by calling `table( fw = ['hello','crane'], fwr = convert(rel))`, where `convert` turns the array into an integer representation. This then returns two suggestions for the next word to guess according to the two different algorithms, along with some statistics and a copy of all the remaining possible words. It is possible to pass this list of remaiining words in the `answers` argument to save on computation. In this case the output is 
+```py
+([['depth', 1, 1.0], ['depth', 1.0, 1]], ['depth', 'teeth', 'weigh'])
+```
+so both algorithms suggest "depth" as the next guess, as it guarantees cutting the possible number of answers to just one next iteration.
 
 Switching word lists isn't as simple as it should be currently, there's a few places in the code that have to be changed manually to support it, I'll try fixing this in a future update.
 
